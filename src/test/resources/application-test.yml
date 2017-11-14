@@ -1,0 +1,30 @@
+
+spring:
+  security:
+    authentication:
+      jwt:
+        publickey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApRoGPrQDzAF2i2P8wuSHlScgSRiHA7fgYtpH/14wejlLqqCLVbPjUm11n1uMuhKUhzjdspvDYA1405o9uAs51F+mt5tgakQNww4rc0rlEkdPyTV6VqnROp7ZGVcl77Ab21CVlv30+SGCY442TjKzcwIR5areGWBevmdl9iPTwl7IBxGtGY4fxyX0xzqPLqUTEN3musvNzqjx+yR+FUn3YerOV81NXXO0WoDIvgMdeeQ9vAqlU0yKy3qp3R++gOUu/qihEYFSZPRiswQBuix50532RP+95P/VGaoL4rkiXN3mWp0qa6/cW+yFdLrjnb+oanHlHYVk9FI/hWabx9ZA2QIDAQAB
+        #expiration time in seconds (eq. 6 hours)
+        expiration: 21600
+
+
+  datasource:
+    url:  "jdbc:postgresql://localhost:5432/postgres"
+    username: postgres
+    password: mysecretpassword
+# Redis
+  redis:
+    host: localhost
+    port: 6379
+
+# daf-report-api
+daf-report-api:
+  dashboard:
+    url: http://localhost:4200
+  tokenstore:
+    # redis / jdbc
+    implementation: jdbc
+    #expiration time in seconds
+    token-expiration-time: 600
+
+listUserPreferencesAllow: distance,currency
