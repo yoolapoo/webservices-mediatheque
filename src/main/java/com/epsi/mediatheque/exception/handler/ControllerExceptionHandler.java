@@ -1,9 +1,8 @@
 package com.epsi.mediatheque.exception.handler;
 
-import com.epsi.mediatheque.data.MediathequeApiStatus;
+import com.epsi.mediatheque.data.MediaApiStatus;
 import com.epsi.mediatheque.dto.ErrorResponse;
-import com.epsi.mediatheque.exception.DafReportPortalApiException;
-import io.jsonwebtoken.MalformedJwtException;
+import com.epsi.mediatheque.exception.MedialApiException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.security.GeneralSecurityException;
-
 @Slf4j
 @RestControllerAdvice
 public class ControllerExceptionHandler {
@@ -22,31 +19,15 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(Throwable.class)
 	public ResponseEntity<ErrorResponse> throwableHandler(Throwable exception) {
 		log.error(exception.getMessage(), exception);
-		ErrorResponse res = new ErrorResponse(MediathequeApiStatus.DAF_REPORT_API_STATUS_1500.toString(), MediathequeApiStatus.DAF_REPORT_API_STATUS_1500.getReason());
+		ErrorResponse res = new ErrorResponse(MediaApiStatus.MEDIA_API_STATUS_1500.toString(), MediaApiStatus.MEDIA_API_STATUS_1500.getReason());
 		return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@ExceptionHandler(DafReportPortalApiException.class)
-	public ResponseEntity<ErrorResponse> dafReportPortalApiExceptionHandler(DafReportPortalApiException exception) {
+	@ExceptionHandler(MedialApiException.class)
+	public ResponseEntity<ErrorResponse> dafReportPortalApiExceptionHandler(MedialApiException exception) {
 		ErrorResponse res = new ErrorResponse(exception.getCode(), exception.getMessage());
 		return new ResponseEntity<>(res, exception.getStatus());
 	}
-
-
-	@ExceptionHandler(GeneralSecurityException.class)
-	public ResponseEntity<ErrorResponse> generalSecurityExceptionHandler(GeneralSecurityException exception) {
-		log.error(exception.getMessage(), exception);
-		ErrorResponse res = new ErrorResponse(MediathequeApiStatus.DAF_REPORT_API_STATUS_1401.toString(), MediathequeApiStatus.DAF_REPORT_API_STATUS_1401.getReason());
-		return new ResponseEntity<>(res, HttpStatus.FORBIDDEN);
-	}
-
-	@ExceptionHandler(MalformedJwtException.class)
-	public ResponseEntity<ErrorResponse> malformedJwtExceptionHandler(MalformedJwtException exception) {
-		log.error(exception.getMessage(), exception);
-		ErrorResponse res = new ErrorResponse(MediathequeApiStatus.DAF_REPORT_API_STATUS_1402.toString(), MediathequeApiStatus.DAF_REPORT_API_STATUS_1402.getReason());
-		return new ResponseEntity<>(res, HttpStatus.FORBIDDEN);
-	}
-
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
 	public ResponseEntity<ErrorResponse> processValidationError(HttpRequestMethodNotSupportedException ex) {
@@ -57,7 +38,19 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ResponseEntity<ErrorResponse> processValidationError() {
-		ErrorResponse res = new ErrorResponse(MediathequeApiStatus.DAF_REPORT_API_STATUS_1400.toString(), MediathequeApiStatus.DAF_REPORT_API_STATUS_1400.getReason());
+		ErrorResponse res = new ErrorResponse(MediaApiStatus.MEDIA_API_STATUS_1400.toString(), MediaApiStatus.MEDIA_API_STATUS_1400.getReason());
 		return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(MediaNotFoundException.class)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public ResponseEntity<ErrorResponse> processValidationError(){
+		return null;
+	}
+
+	@ExceptionHandler(UnavailablemediaException.class)
+	@ResponseStatus(HttpStatus.MULTIPLE_CHOICES)
+	public ResponseEntity<ErrorResponse> processValidationError(){
+		return null;
 	}
 }

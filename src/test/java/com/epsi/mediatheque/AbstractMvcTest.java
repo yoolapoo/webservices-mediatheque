@@ -1,9 +1,9 @@
+/*
 package com.epsi.mediatheque;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
@@ -32,7 +32,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @SpringBootTest
@@ -61,7 +60,6 @@ public class AbstractMvcTest {
 
 	@Before
 	public void setup() throws Exception {
-		mockMvc = webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
 
 	}
 
@@ -137,3 +135,4 @@ public class AbstractMvcTest {
 		return query_pairs;
 	}
 }
+*/

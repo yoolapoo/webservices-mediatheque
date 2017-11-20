@@ -1,9 +1,9 @@
+/*
 package com.epsi.mediatheque.controller;
 
 import com.epsi.mediatheque.AbstractMvcTest;
 import com.epsi.mediatheque.data.MediathequeApiStatus;
 import com.epsi.mediatheque.dto.TokenDto;
-import com.epsi.mediatheque.service.TokenStoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
 import org.json.JSONObject;
@@ -110,4 +110,4 @@ public class LoginControllerTest extends AbstractMvcTest {
 
 	}
 
-}
+}*/

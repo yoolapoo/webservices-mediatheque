@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * Generic error response
  * 
- * @author A175402
+ * @author ph
  *
  */
 @Data
