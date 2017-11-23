@@ -7,7 +7,7 @@ import lombok.Data;
 public class Media {
 
     @ApiModelProperty(notes = "The database unique media ID")
-    private String id_media;
+    private long id_media;
     @ApiModelProperty(notes = "Type of the media")
     private String type_media;
     @ApiModelProperty(notes = "Author of the media")
@@ -18,4 +18,6 @@ public class Media {
     private String creation;
     @ApiModelProperty(notes = "Genre of the media")
     private String genre;
+    @ApiModelProperty(notes = "Availability of the media")
+    private boolean isAvailable;
 }

@@ -20,6 +20,10 @@ public class JdbcMediaServiceImpl implements MediaService {
     public List<Media> findAll(String type){return this.movieMapper.findAll(type);}
 
     @Override
-    public Media findById(String id){return this.movieMapper.findById(id);}
+    public Optional<Media> findById(String id){return this.movieMapper.findById(id);}
+
+    @Override
+    public String addMedia(String id, Media media){return this.movieMapper.addMedia(id, media);}
+
 
 }
