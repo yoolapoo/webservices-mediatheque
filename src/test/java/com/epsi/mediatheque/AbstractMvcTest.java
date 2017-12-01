@@ -1,4 +1,3 @@
-/*
 package com.epsi.mediatheque;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,17 +42,17 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @Data
 public class AbstractMvcTest {
 
-	@Value("${spring.security.authentication.jwt.expiration:21600}")
-	private long delayExpirationToken;
+/*	@Value("${spring.security.authentication.jwt.expiration:21600}")
+	private long delayExpirationToken;*/
 
 	protected MockMvc mockMvc;
 	private ObjectMapper mapper = new ObjectMapper();
 	private static Set<Class> inited = new HashSet<>();
 
-	private static Key privateKey;
+/*	private static Key privateKey;
 	public static String validToken;
 	public static String expiredToken;
-	public static String malformatedToken;
+	public static String malformatedToken;*/
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
@@ -65,10 +64,12 @@ public class AbstractMvcTest {
 
 	@BeforeClass
 	public static void init() throws Exception {
+/*
 		privateKey = getRSAPrivateKey();
+*/
 	}
 
-	protected String json(Object o) throws IOException {
+/*	protected String json(Object o) throws IOException {
 		return mapper.writeValueAsString(o);
 	}
 
@@ -122,7 +123,7 @@ public class AbstractMvcTest {
 		claims.put("timezone", "Europe/Paris");
 		claims.put("locale", "fr_FR");
 		return claims;
-	}
+	}*/
 
 	public static Map<String, String> splitQuery(URL url) throws UnsupportedEncodingException {
 		Map<String, String> query_pairs = new LinkedHashMap<String, String>();
@@ -135,4 +136,3 @@ public class AbstractMvcTest {
 		return query_pairs;
 	}
 }
-*/

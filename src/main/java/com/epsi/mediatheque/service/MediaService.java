@@ -9,10 +9,14 @@ import java.util.Optional;
 @Service
 public interface MediaService {
 
-    Optional<Media> findById(String id);
+    Optional<Media> findById(long id);
 
     List<Media> findAll(String type);
 
-    String addMedia(String id, Media media);
+    List<Media> search(String searchTerm);
+
+    String addMedia(long id, Media media);
+
+    void updateMedia(Media media);
 
 }

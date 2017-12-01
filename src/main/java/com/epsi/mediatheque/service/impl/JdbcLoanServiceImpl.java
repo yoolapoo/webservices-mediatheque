@@ -13,6 +13,9 @@ public class JdbcLoanServiceImpl implements LoanService {
     }
 
     @Override
-    public String addLoan(long id_user, long id_media){return this.loanMapper.addLoan(id_user,id_media);}
+    public void addLoan(long id_user, long id_media){ this.loanMapper.addLoan(id_user,id_media);}
+
+    @Override
+    public void deleteLoan(long id_user, long id_media){ this.loanMapper.addLoan(id_user,id_media);}
 
 }

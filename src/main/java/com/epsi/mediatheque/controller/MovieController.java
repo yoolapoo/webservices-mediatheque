@@ -1,6 +1,8 @@
 package com.epsi.mediatheque.controller;
 
+import com.epsi.mediatheque.data.MediaApiStatus;
 import com.epsi.mediatheque.domain.Media;
+import com.epsi.mediatheque.exception.AllMediasAlreadyReturnedException;
 import com.epsi.mediatheque.exception.MediaNotFoundException;
 import com.epsi.mediatheque.exception.UnavailablemediaException;
 import com.epsi.mediatheque.service.LoanService;
@@ -9,11 +11,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Api(value = "store",description = "Operations about movies")
 @RestController
@@ -60,7 +63,7 @@ public class MovieController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
     @GetMapping("movies/{id}")
-    private Optional<Media> getMovie(@PathVariable("id") String id){
+    private Optional<Media> getMovie(@PathVariable("id") long id){
         Optional<Media> response = this.movieService.findById(id);
         if(response.isPresent()){
             return Optional.of(response.get());
@@ -82,10 +85,10 @@ public class MovieController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
     @PostMapping("movies/{id}")
-    private String addMovie(@PathVariable String id, @RequestBody Media movie){
-        Optional<Media> movieExisted = this.movieService.findById(id);
+    private String addMovie(@PathVariable long isbn, @RequestBody Media movie){
+        Optional<Media> movieExisted = this.movieService.findById(isbn);
         if(movieExisted.isPresent()){return String.valueOf(movieExisted.get().getId_media());}
-        else{return this.movieService.addMedia(id, movie);}
+        else{return this.movieService.addMedia(isbn, movie);}
     }
 
 
@@ -104,10 +107,74 @@ public class MovieController {
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
-    @PostMapping("movies")
-    private void borrowMovie(long id_user, long id_media) throws MediaNotFoundException, UnavailablemediaException {
+    @PostMapping("borrow/{id_user}/{id_media}")
+    private void borrowMovie(@PathVariable long id_user, @PathVariable long id_media) throws MediaNotFoundException, UnavailablemediaException {
+        Optional<Media> media = this.movieService.findById(id_media);
+        if(!media.isPresent()){
+            throw new MediaNotFoundException(HttpStatus.BAD_REQUEST, MediaApiStatus.MEDIA_API_STATUS_1402.toString(), MediaApiStatus.MEDIA_API_STATUS_1402.getReason());
+        }
+        if(media.get().isAvailable()){
+            this.loanService.addLoan(id_media,id_user);
+        } else {
+            throw new UnavailablemediaException(HttpStatus.NO_CONTENT, MediaApiStatus.MEDIA_API_STATUS_1401.toString(),MediaApiStatus.MEDIA_API_STATUS_1401.getReason());
+        }
 
-
-        this.loanService.addLoan(id_media,id_user);
     }
+
+    /**
+     * Return a movie back to the library
+     *
+     * @param id_media       the id of the movie to borrow
+     * @param id_user the name of the user
+     * @throws MediaNotFoundException            if no movie in the library has the given id
+     * @throws AllMediasAlreadyReturnedException if all movies with the given id are already returned
+     */
+    @ApiOperation(value="Return a movie from the library")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200,message = "Successfully returned the movie"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
+    @PostMapping("return/{id_user}/{id_media}")
+    public void returnMusic(@PathVariable long id_user, @PathVariable long id_media) throws MediaNotFoundException, AllMediasAlreadyReturnedException {
+        Optional<Media> media = movieService.findById(id_media);
+        if (!media.isPresent()) {
+            throw new MediaNotFoundException(HttpStatus.BAD_REQUEST, MediaApiStatus.MEDIA_API_STATUS_1402.toString(), MediaApiStatus.MEDIA_API_STATUS_1402.getReason());
+        }
+        if (media.get().isAvailable()) {
+            media.get().setAvailable(true);
+            movieService.updateMedia(media.get());
+            loanService.deleteLoan(id_user, id_media);
+        } else {
+            throw new AllMediasAlreadyReturnedException(HttpStatus.ALREADY_REPORTED, MediaApiStatus.MEDIA_API_STATUS_1403.toString(), MediaApiStatus.MEDIA_API_STATUS_1401.getReason());
+        }
+
+    }
+
+    /**
+     * Return all movies with an author, a title or an ISBN matching the search term
+     *
+     * @param searchTerm the searched term
+     * @return the movies matching the search term
+     */
+    @ApiOperation(value="Return all movies with an author, a title or an ISBN matching the search term")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200,message = "Successfully returned the list of movies"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
+    @GetMapping("allmovies/{searchterm}")
+    public List<Media> searchMovies(@PathVariable String searchTerm) {
+        List<Media> responses = new ArrayList<>();
+        movieService.search(searchTerm).stream().forEach(item -> {
+            responses.add(item);
+        });
+        return responses;
+    }
+
+
+
+
 }

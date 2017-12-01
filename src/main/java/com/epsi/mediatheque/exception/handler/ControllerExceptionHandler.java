@@ -2,6 +2,7 @@ package com.epsi.mediatheque.exception.handler;
 
 import com.epsi.mediatheque.data.MediaApiStatus;
 import com.epsi.mediatheque.dto.ErrorResponse;
+import com.epsi.mediatheque.exception.AllMediasAlreadyReturnedException;
 import com.epsi.mediatheque.exception.MediaNotFoundException;
 import com.epsi.mediatheque.exception.MedialApiException;
 import com.epsi.mediatheque.exception.UnavailablemediaException;
@@ -47,6 +48,13 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(UnavailablemediaException.class)
 	@ResponseStatus(HttpStatus.MULTIPLE_CHOICES)
 	public ResponseEntity<ErrorResponse> processValidationError(UnavailablemediaException ex){
+		ErrorResponse res = new ErrorResponse(String.valueOf(HttpStatus.METHOD_NOT_ALLOWED.value()), ex.getMessage());
+		return new ResponseEntity<>(res, HttpStatus.METHOD_NOT_ALLOWED);
+	}
+
+	@ExceptionHandler(AllMediasAlreadyReturnedException.class)
+	@ResponseStatus(HttpStatus.MULTIPLE_CHOICES)
+	public ResponseEntity<ErrorResponse> processValidationError(AllMediasAlreadyReturnedException ex){
 		ErrorResponse res = new ErrorResponse(String.valueOf(HttpStatus.METHOD_NOT_ALLOWED.value()), ex.getMessage());
 		return new ResponseEntity<>(res, HttpStatus.METHOD_NOT_ALLOWED);
 	}

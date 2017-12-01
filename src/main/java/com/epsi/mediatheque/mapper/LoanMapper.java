@@ -20,5 +20,5 @@ public interface LoanMapper {
     List<Loan> findAll();
 
     @Insert("INSERT INTO loan(id_user, id_media) VALUES( #{id_user}, #{id_media})")
-    String addLoan(long id_user, long id_media );
+    void addLoan(long id_user, long id_media );
 }

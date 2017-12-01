@@ -1,52 +1,33 @@
-/*
 package com.epsi.mediatheque.controller;
 
 import com.epsi.mediatheque.AbstractMvcTest;
-import com.epsi.mediatheque.data.MediathequeApiStatus;
-import com.epsi.mediatheque.dto.TokenDto;
 import lombok.extern.slf4j.Slf4j;
-import org.hamcrest.Matchers;
-import org.json.JSONObject;
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.net.URL;
-import java.util.Map;
-import java.util.UUID;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @Slf4j
-public class LoginControllerTest extends AbstractMvcTest {
+public class MovieControllerTest extends AbstractMvcTest {
 
-	@Value("${daf-report-api.dashboard.url}")
-	private String dashboardUrl;
-
-	@Autowired
-	private LoginController loginController;
+/*	@Value("${daf-report-api.dashboard.url}")
+	private String dashboardUrl;*/
 
 	@Autowired
-	private TokenStoreService tokenStoreService;
+	private MovieController movieController;
+
+/*	@Autowired
+	private TokenStoreService tokenStoreService;*/
 
 	@Test
 	public void controllerInitializedCorrectly() {
 
-		assertThat(loginController).isNotNull();
+		assertThat(movieController).isNotNull();
 	}
 
 
-	@Test
+
+	/*@Test
 	public void loginWithValidToken() throws Exception {
 		TokenDto tokenDto = new TokenDto();
 		tokenDto.setToken(generateValidToken());
@@ -108,6 +89,6 @@ public class LoginControllerTest extends AbstractMvcTest {
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 			.andExpect(MockMvcResultMatchers.jsonPath(".access_token").value(aFakeToken));
 
-	}
+	}*/
 
-}*/
+}
