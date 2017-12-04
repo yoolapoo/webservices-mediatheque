@@ -1,6 +1,7 @@
 package com.epsi.mediatheque.controller;
 
 import com.epsi.mediatheque.AbstractMvcTest;
+import com.epsi.mediatheque.service.MediaService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class MovieControllerTest extends AbstractMvcTest {
 	@Autowired
 	private MovieController movieController;
 
-/*	@Autowired
-	private TokenStoreService tokenStoreService;*/
+	@Autowired
+	private MediaService mediaService;
 
 	@Test
 	public void controllerInitializedCorrectly() {

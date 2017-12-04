@@ -1,8 +1,6 @@
 package com.epsi.mediatheque;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
-
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
@@ -10,28 +8,15 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.security.Key;
-import java.security.KeyStore;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.*;
-
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import java.util.HashSet;
+import java.util.Set;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -125,7 +110,7 @@ public class AbstractMvcTest {
 		return claims;
 	}*/
 
-	public static Map<String, String> splitQuery(URL url) throws UnsupportedEncodingException {
+/*	public static Map<String, String> splitQuery(URL url) throws UnsupportedEncodingException {
 		Map<String, String> query_pairs = new LinkedHashMap<String, String>();
 		String query = url.getQuery();
 		String[] pairs = query.split("&");
@@ -134,5 +119,5 @@ public class AbstractMvcTest {
 			query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"), URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
 		}
 		return query_pairs;
-	}
+	}*/
 }
