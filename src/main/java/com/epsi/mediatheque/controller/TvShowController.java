@@ -110,7 +110,7 @@ public class TvShowController {
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
-    @PostMapping("borrow/{id}/{id_user}")
+    @PostMapping("tvshowborrow/{id}/{id_user}")
     private void borrowTvShow(@PathVariable long id,@PathVariable long id_user)throws MediaNotFoundException, UnavailablemediaException {
         Optional<Media> media = this.tvShowService.findById(id);
         if(!media.isPresent()){
@@ -138,7 +138,7 @@ public class TvShowController {
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
-    @PostMapping("return/{id_user}/{id_media}")
+    @PostMapping("tvshowreturn/{id_user}/{id_media}")
     public void returnMusic(@PathVariable long id_user, @PathVariable long id_media) throws MediaNotFoundException, AllMediasAlreadyReturnedException {
         Optional<Media> media = tvShowService.findById(id_media);
         if (!media.isPresent()) {

@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class MovieController {
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
-    @GetMapping("movies")
+    @GetMapping(value = "movies", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     private List<Media> getMovies(){
         List<Media> response =this.movieService.findAll("movie");
         return response;
@@ -62,7 +63,7 @@ public class MovieController {
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
-    @GetMapping("movies/{id}")
+    @GetMapping(value = "movies/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     private Optional<Media> getMovie(@PathVariable("id") long id){
         Optional<Media> response = this.movieService.findById(id);
         if(response.isPresent()){
@@ -84,7 +85,7 @@ public class MovieController {
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
-    @PostMapping("movies/{id}")
+    @PostMapping(value = "movies/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     private String addMovie(@PathVariable long isbn, @RequestBody Media movie){
         Optional<Media> movieExisted = this.movieService.findById(isbn);
         if(movieExisted.isPresent()){return String.valueOf(movieExisted.get().getId_media());}
@@ -107,7 +108,7 @@ public class MovieController {
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
-    @PostMapping("borrow/{id_user}/{id_media}")
+    @PostMapping(value = "movieborrow/{id_user}/{id_media}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     private void borrowMovie(@PathVariable long id_user, @PathVariable long id_media) throws MediaNotFoundException, UnavailablemediaException {
         Optional<Media> media = this.movieService.findById(id_media);
         if(!media.isPresent()){
@@ -136,7 +137,7 @@ public class MovieController {
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
-    @PostMapping("return/{id_user}/{id_media}")
+    @PostMapping(value = "moviereturn/{id_user}/{id_media}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public void returnMusic(@PathVariable long id_user, @PathVariable long id_media) throws MediaNotFoundException, AllMediasAlreadyReturnedException {
         Optional<Media> media = movieService.findById(id_media);
         if (!media.isPresent()) {
@@ -165,7 +166,7 @@ public class MovieController {
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
-    @GetMapping("allmovies/{searchterm}")
+    @GetMapping(value = "allmovies/{searchterm}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<Media> searchMovies(@PathVariable String searchTerm) {
         List<Media> responses = new ArrayList<>();
         movieService.search(searchTerm).stream().forEach(item -> {

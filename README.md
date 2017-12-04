@@ -1,4 +1,4 @@
-# WEBSERVICES - MEDIATHEQUE
+# WEB SERVICES - MEDIATHEQUE
 
 Pour lancer l'application, il faut au préalable avoir installer Postgresql et créer une database mediatheque. 
 

@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS token_store;
+DROP TABLE IF EXISTS token_store CASCADE ;
 CREATE TABLE token_store
 (
   uuid character varying(255) NOT NULL,
@@ -10,7 +10,7 @@ WITH (
 OIDS=FALSE
 );
 
-DROP TABLE IF EXISTS media;
+DROP TABLE IF EXISTS media CASCADE;
 CREATE TABLE media
 (
   id_media NUMERIC,
@@ -26,7 +26,7 @@ WITH (
 OIDS=FALSE
 );
 
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users
 (
   id_user NUMERIC,
@@ -40,7 +40,7 @@ WITH (
 OIDS=FALSE
 );
 
-DROP TABLE IF EXISTS loan;
+DROP TABLE IF EXISTS loan CASCADE;
 CREATE TABLE loan
 (
   id_loan SERIAL,
