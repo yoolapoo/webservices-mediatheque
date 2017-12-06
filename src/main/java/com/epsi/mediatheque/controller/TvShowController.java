@@ -25,9 +25,9 @@ public class TvShowController {
     private MediaService tvShowService;
     private LoanService loanService;
 
-    public TvShowController(MediaService tvShowService, LoanService loanService){
+    public TvShowController(MediaService mediaService, LoanService loanService){
         super();
-        this.tvShowService = tvShowService;
+        this.tvShowService = mediaService;
         this.loanService = loanService;
     }
 

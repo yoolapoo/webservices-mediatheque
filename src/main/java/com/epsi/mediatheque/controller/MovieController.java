@@ -26,9 +26,9 @@ public class MovieController {
     private MediaService movieService;
     private LoanService loanService;
 
-    public MovieController(MediaService movieService, LoanService loanService){
+    public MovieController(MediaService mediaService, LoanService loanService){
         super();
-        this.movieService = movieService;
+        this.movieService = mediaService;
         this.loanService = loanService;
     }
 
